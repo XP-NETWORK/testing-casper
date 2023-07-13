@@ -17,8 +17,8 @@ Create the `.env` file and populate it with the key-value pairs
 ```bash
 # Casper Private Key
 SK=
-# Casper Public Key
-PK=
+# Casper Account Hash
+AH=
 # testnet | mainnet
 NETWORK=testnet
 # EVM Private key
