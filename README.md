@@ -42,6 +42,7 @@ ts-node ./src/outgoing.ts
 |:-:|:-:|:-:|
 |Casper-> Moonbeam|Approval|https://testnet.cspr.live/deploy/03aff895959e4a996124a5d32b2d4e487054e5f9eeb5cce5ad158cba84f8a4de|
 |Casper-> Moonbeam|Transfer|https://testnet.cspr.live/deploy/5d59527523955e20c6d7cebea4ffa0d4573ef73267278a8d07c8f5b532c0d14e|
+|-> Moonbeam| Mint Wrapped| https://moonbase.moonscan.io/tx/0x7fa85e840b5caa0c84f45cd95158634ca13c0bf8ad73d15c7425cee6316d4fac|
 
 
 To replace Moonbeam with another network, replace the chain handler object with another one in `./srs/outgoing.ts`:
@@ -67,3 +68,11 @@ Make sure, the wallet of the other than Casper chain matches the chain protocol 
 ```bash
 ts-node ./src/incomming.ts
 ```
+
+### Example Testnet transactions:
+
+|Direction| Operation| Explorer link|
+|:-:|:-:|:-:|
+|Mumbai -> Casper|Approval|https://mumbai.polygonscan.com/tx/0x5b64e30ad346d2d76bb3a79c695a7862d879f7f4900e8ebfa34ee6a63ae9760a|
+|Mumbai -> Casper|Transfer|https://mumbai.polygonscan.com/tx/0xb088cfe836d54adff8e786b4d553d3f79d1f7e30bc4c1700da1f9cfde9196483|
+|-> Casper| Mint Wrapped| https://testnet.cspr.live/contract-package/0074557b46c7a7c13e0b178e4463f451325129d845e9e494425d39cfd40e619d|

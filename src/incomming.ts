@@ -13,9 +13,9 @@ config();
 
     const casper = await Casper();
     const factory = await getFactory();
-    const {chain, signer} = await OtherChain("MOONBEAM");
+    const {chain, signer} = await OtherChain("Polygon");
     const EVM_PK = process.env.EVM_PK!
-    const casper_PK = process.env.PK!;
+    const casper_PK = process.env.AH!; // Account Hash
 
     const NFTs = await factory.nftList(
         chain,
