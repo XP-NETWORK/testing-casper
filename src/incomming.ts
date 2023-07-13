@@ -3,8 +3,6 @@ import { error, log } from "console";
 import BigNumber from "bignumber.js";
 import {
     Casper, 
-    CasperHelper, 
-    getAccountRawHash, 
     getFactory, 
     OtherChain
 } from "./setup";
@@ -15,33 +13,33 @@ config();
 
     const casper = await Casper();
     const factory = await getFactory();
-    const helper = CasperHelper;
     const {chain, signer} = await OtherChain("MOONBEAM");
+    const EVM_PK = process.env.EVM_PK!
+    const casper_PK = process.env.PK!;
 
     const NFTs = await factory.nftList(
-        casper,
-        await getAccountRawHash()
+        chain,
+        EVM_PK
     )
 
-    const selected = NFTs[0]
+    const selected = NFTs[2]
 
     log(selected)
     
-    const approval = await casper.preTransfer(
-        helper,
+    const approval = await chain.preTransfer(
+        signer,
         selected,
-        // @ts-ignore
         new BigNumber(0)
     );
 
     log("Approval:", approval);
 
     const transfer = await factory.transferNft(
-        casper,
         chain as any,
+        casper,
         selected,
-        helper,
-        process.env.EVM_PK!
+        signer,
+        casper_PK
     );
 
     log("Transfer:", transfer);

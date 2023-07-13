@@ -1,8 +1,9 @@
 import { CLPublicKey, Keys } from "casper-js-sdk";
-import { error } from "console";
-import {env, exit} from 'process';
+import { ethers } from 'ethers';
+import { env } from 'process';
 import {config} from 'dotenv';
-import { AppConfigs, Chain, ChainFactory, ChainFactoryConfigs } from "xp.network";
+import {chainToRpc} from './utils';
+import { AppConfigs, Chain, ChainFactory, ChainFactoryConfigs, MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { CasperHelperFromKeys } from "xp.network/dist/helpers/casper";
 config();
 
@@ -47,8 +48,22 @@ export const Casper = async () => {
     return await (await getFactory()).inner(Chain.CASPER);
 }
 
-export const Moonbeam = async () => {
-    return await (await getFactory()).inner(Chain.MOONBEAM);
+export const getEVMSigner = (rpc:string) => {
+    const provider = new ethers.providers.JsonRpcProvider(rpc);
+    return new ethers.Wallet(`0x${env.ENV_SK!}`,provider);
+}
+
+export const OtherChain = async (name:string) => {
+
+    const selectedChain = name.toUpperCase();
+    // @ts-ignore
+    const chain = await (await getFactory()).inner(Chain[selectedChain]);
+
+    const rpc:string = chainToRpc(name)!;
+
+    const signer = getEVMSigner(rpc) as ethers.Wallet;
+
+    return {chain, signer}
 }
 
 export const getAccountRawHash = async () => {
