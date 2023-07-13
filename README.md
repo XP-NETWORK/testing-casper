@@ -44,19 +44,18 @@ ts-node ./src/outgoing.ts
 |Casper-> Moonbeam|Transfer|https://testnet.cspr.live/deploy/5d59527523955e20c6d7cebea4ffa0d4573ef73267278a8d07c8f5b532c0d14e|
 
 
-To replace Moonbeam with another network, replace the chain handler object with another one in `./srs/setup.ts`:
+To replace Moonbeam with another network, replace the chain handler object with another one in `./srs/outgoing.ts`:
 
 ```ts
-export const OtherChain = async () => {
-    return await (await getFactory()).inner(Chain.MOONBEAM);
-}
+const {chain, signer} = await OtherChain("MOONBEAM");
 ```
 to
 ```ts
-export const OtherChain = async () => {
-    return await (await getFactory()).inner(Chain.<YOURCHAIN>);
-}
+const {chain, signer} = await OtherChain("YOURCHAINNAME");
 ```
+
+Choose `YOURCHAINNAME` from the list in the switch case here: `./src/utils`.
+
 Make sure, the wallet of the other than Casper chain matches the chain protocol you selected above.
 
 
