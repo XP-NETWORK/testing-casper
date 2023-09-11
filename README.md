@@ -73,6 +73,6 @@ ts-node ./src/incomming.ts
 
 |   Direction   |  Operation   |                                            Explorer link                                             |
 | :-----------: | :----------: | :--------------------------------------------------------------------------------------------------: |
-| BSC -> Casper |   Approval   | https://mumbai.polygonscan.com/tx/0xd8a2467d3c52e1ea1028687e29ec2aa3a64b76d55a9d619787a78180c2931eca |
-| BSC -> Casper |   Transfer   | https://mumbai.polygonscan.com/tx/0x5603b42ca39047089404351e32e4b888450633b0a1d7f739a805af268d9c4209 |
+| BSC -> Casper |   Approval   | https://testnet.bscscan.com/tx/0xd8a2467d3c52e1ea1028687e29ec2aa3a64b76d55a9d619787a78180c2931eca |
+| BSC -> Casper |   Transfer   | https://testnet.bscscan.com/tx/0x5603b42ca39047089404351e32e4b888450633b0a1d7f739a805af268d9c4209 |
 | BSC -> Casper | Mint Wrapped |  https://testnet.cspr.live/deploy/79badd2b884f25312db5a12696290d76b5b078253ca79ced58f438d4ed01ad65   |
