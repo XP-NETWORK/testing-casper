@@ -38,27 +38,27 @@ ts-node ./src/outgoing.ts
 
 ### Example Testnet transactions:
 
-|Direction| Operation| Explorer link|
-|:-:|:-:|:-:|
-|Casper-> Moonbeam|Approval|https://testnet.cspr.live/deploy/03aff895959e4a996124a5d32b2d4e487054e5f9eeb5cce5ad158cba84f8a4de|
-|Casper-> Moonbeam|Transfer|https://testnet.cspr.live/deploy/5d59527523955e20c6d7cebea4ffa0d4573ef73267278a8d07c8f5b532c0d14e|
-|-> Moonbeam| Mint Wrapped| https://moonbase.moonscan.io/tx/0x7fa85e840b5caa0c84f45cd95158634ca13c0bf8ad73d15c7425cee6316d4fac|
-
+|     Direction     |  Operation   |                                           Explorer link                                            |
+| :---------------: | :----------: | :------------------------------------------------------------------------------------------------: |
+| Casper-> Moonbeam |   Approval   | https://testnet.cspr.live/deploy/02df192b718f65c19a91183ed8c79fc189c1fb7ac092f0e29cf8496a45ccd04c  |
+| Casper-> Moonbeam |   Transfer   | https://testnet.cspr.live/deploy/feb77a4582019af3dc4a30566101c337c1c118069ac8880dda5d13a2c80db9dc  |
+|    -> Moonbeam    | Mint Wrapped | https://moonbase.moonscan.io/tx/0xe64d5608f7842948249e156e97431f811dabda95aec20a07a19f4edc782cbae8 |
 
 To replace Moonbeam with another network, replace the chain handler object with another one in `./srs/outgoing.ts`:
 
 ```ts
-const {chain, signer} = await OtherChain("MOONBEAM");
+const { chain, signer } = await OtherChain("MOONBEAM");
 ```
+
 to
+
 ```ts
-const {chain, signer} = await OtherChain("YOURCHAINNAME");
+const { chain, signer } = await OtherChain("YOURCHAINNAME");
 ```
 
 Choose `YOURCHAINNAME` from the list in the switch case here: `./src/utils`.
 
 Make sure, the wallet of the other than Casper chain matches the chain protocol you selected above.
-
 
 ## 4. Transferring EVM -> Casper
 
@@ -71,8 +71,8 @@ ts-node ./src/incomming.ts
 
 ### Example Testnet transactions:
 
-|Direction| Operation| Explorer link|
-|:-:|:-:|:-:|
-|Mumbai -> Casper|Approval|https://mumbai.polygonscan.com/tx/0x5b64e30ad346d2d76bb3a79c695a7862d879f7f4900e8ebfa34ee6a63ae9760a|
-|Mumbai -> Casper|Transfer|https://mumbai.polygonscan.com/tx/0xb088cfe836d54adff8e786b4d553d3f79d1f7e30bc4c1700da1f9cfde9196483|
-|-> Casper| Mint Wrapped| https://testnet.cspr.live/contract-package/0074557b46c7a7c13e0b178e4463f451325129d845e9e494425d39cfd40e619d|
+|   Direction   |  Operation   |                                            Explorer link                                             |
+| :-----------: | :----------: | :--------------------------------------------------------------------------------------------------: |
+| BSC -> Casper |   Approval   | https://mumbai.polygonscan.com/tx/0xd8a2467d3c52e1ea1028687e29ec2aa3a64b76d55a9d619787a78180c2931eca |
+| BSC -> Casper |   Transfer   | https://mumbai.polygonscan.com/tx/0x5603b42ca39047089404351e32e4b888450633b0a1d7f739a805af268d9c4209 |
+| BSC -> Casper | Mint Wrapped |  https://testnet.cspr.live/deploy/79badd2b884f25312db5a12696290d76b5b078253ca79ced58f438d4ed01ad65   |

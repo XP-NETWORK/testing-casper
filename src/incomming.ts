@@ -1,51 +1,55 @@
-import {exit} from 'process';
+import { exit } from "process";
 import { error, log } from "console";
 import BigNumber from "bignumber.js";
-import {
-    Casper, 
-    getFactory, 
-    OtherChain
-} from "./setup";
-import {config} from 'dotenv';
-config();
+import { Casper, getFactory, OtherChain } from "./setup";
+import { Web3Helper } from "xp.network";
 
 (async () => {
+  const casper = await Casper();
+  const factory = await getFactory();
+  const {
+    chain,
+    signer,
+  }: { chain: Web3Helper; signer: any } = await OtherChain("BSC");
+  const EVM_PK = process.env.EVM_PK!;
+  const casper_PK = process.env.AH!; // Account Hash
 
-    const casper = await Casper();
-    const factory = await getFactory();
-    const {chain, signer} = await OtherChain("Polygon");
-    const EVM_PK = process.env.EVM_PK!
-    const casper_PK = process.env.AH!; // Account Hash
+  const NFTs = await factory.nftList(chain, EVM_PK);
 
-    const NFTs = await factory.nftList(
-        chain,
-        EVM_PK
-    )
+  const selected = NFTs[0];
 
-    const selected = NFTs[2]
+  log(selected);
 
-    log(selected)
-    
-    const approval = await chain.preTransfer(
-        signer,
-        selected,
-        new BigNumber(0)
-    );
+  const approval = await (chain as Web3Helper).preTransfer(
+    signer,
+    selected as any,
+    new BigNumber(0) as any,
+    {
+      overrides: {
+        gasPrice: await chain.getProvider().getGasPrice(),
+      },
+    }
+  );
 
-    log("Approval:", approval);
+  log("Approval:", approval);
 
-    const transfer = await factory.transferNft(
-        chain as any,
-        casper,
-        selected,
-        signer,
-        casper_PK
-    );
+  const transfer = await factory.transferNft(
+    chain as any,
+    casper,
+    selected,
+    signer,
+    casper_PK,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    await chain.getProvider().getGasPrice()
+  );
 
-    log("Transfer:", transfer);
+  log("Transfer:", transfer);
 
-    exit(0);
-})().catch(e => {
-    error(e);
-    exit(1);
-})
+  exit(0);
+})().catch((e) => {
+  error(e);
+  exit(1);
+});

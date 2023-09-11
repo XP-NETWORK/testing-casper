@@ -1,53 +1,49 @@
-import { exit } from 'process';
+import { exit } from "process";
 import { error, log } from "console";
 import BigNumber from "bignumber.js";
 import {
-    Casper,
-    CasperHelper,
-    getAccountRawHash,
-    getFactory,
-    OtherChain
+  Casper,
+  CasperHelper,
+  getAccountRawHash,
+  getFactory,
+  OtherChain,
 } from "./setup";
-import { config } from 'dotenv';
+import { config } from "dotenv";
 config();
 
 (async () => {
+  const casper = await Casper();
+  const factory = await getFactory();
+  const helper = CasperHelper;
+  const { chain } = await OtherChain("BSC");
 
-    const casper = await Casper();
-    const factory = await getFactory();
-    const helper = CasperHelper;
-    const { chain } = await OtherChain("MOONBEAM");
+  const NFTs = await factory.nftList(casper, await getAccountRawHash());
 
-    const NFTs = await factory.nftList(
-        casper,
-        await getAccountRawHash()
-    )
+  const selected = NFTs[0];
 
-    const selected = NFTs[0]
+  log(selected);
 
-    log(selected)
+  const approval = await casper.preTransfer(
+    helper,
+    selected,
+    // @ts-ignore
+    new BigNumber(0)
+  );
 
-    const approval = await casper.preTransfer(
-        helper,
-        selected,
-        // @ts-ignore
-        new BigNumber(0)
-    );
+  log("Approval:", approval);
 
-    log("Approval:", approval);
+  const transfer = await factory.transferNft(
+    casper,
+    chain as any,
+    selected,
+    helper,
+    process.env.EVM_PK!
+  );
 
-    const transfer = await factory.transferNft(
-        casper,
-        chain as any,
-        selected,
-        helper,
-        process.env.EVM_PK!
-    );
+  log("Transfer:", transfer);
 
-    log("Transfer:", transfer);
-
-    exit(0);
-})().catch(e => {
-    error(e);
-    exit(1);
-})
+  exit(0);
+})().catch((e) => {
+  error(e);
+  exit(1);
+});
