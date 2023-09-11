@@ -1,14 +1,14 @@
-import {exit} from 'process';
+import { exit } from 'process';
 import { error, log } from "console";
 import BigNumber from "bignumber.js";
 import {
-    Casper, 
-    CasperHelper, 
-    getAccountRawHash, 
-    getFactory, 
+    Casper,
+    CasperHelper,
+    getAccountRawHash,
+    getFactory,
     OtherChain
 } from "./setup";
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 config();
 
 (async () => {
@@ -16,7 +16,7 @@ config();
     const casper = await Casper();
     const factory = await getFactory();
     const helper = CasperHelper;
-    const {chain, signer} = await OtherChain("MOONBEAM");
+    const { chain } = await OtherChain("MOONBEAM");
 
     const NFTs = await factory.nftList(
         casper,
@@ -26,7 +26,7 @@ config();
     const selected = NFTs[0]
 
     log(selected)
-    
+
     const approval = await casper.preTransfer(
         helper,
         selected,

@@ -1,10 +1,10 @@
 import { MainNetRpcUri, TestNetRpcUri } from 'xp.network';
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 config()
 
-export const chainToRpc = (chain:string) => {
+export const chainToRpc = (chain: string) => {
 
-    const rpc = process.env.NETWORK! == 'testnet' 
+    const rpc = process.env.NETWORK! == 'testnet'
         ? TestNetRpcUri
         : MainNetRpcUri;
 
@@ -70,6 +70,6 @@ export const chainToRpc = (chain:string) => {
         case "XDAI":
             return rpc.XDAI
         default:
-            break;
+            throw new Error("Chain not supported")
     }
 }
